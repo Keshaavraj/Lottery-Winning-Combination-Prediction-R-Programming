@@ -1,0 +1,71 @@
+### Data Preparation and Exploration
+
+#### Importing Required Libraries
+library(arules)
+
+#### Reading Transaction Data
+k <- read.transactions("Mahzooz.csv", sep = ",")
+
+#### Checking Dimensions of the Dataset
+dim(k)
+Result:
+[1] 36 50
+
+#### Inspecting First 10 Transactions
+inspect(k[1:10])
+Result:
+     items              
+[1]  {13,2,27,28,35,47} 
+[2]  {14,33,4,47,7,8}   
+[3]  {11,13,19,20,27,30}
+[4]  {32,33,34,38,43,9} 
+[5]  {18,24,37,40,45,9} 
+[6]  {12,18,27,32,44,45}
+[7]  {11,23,25,3,34,44} 
+[8]  {12,16,17,22,28,39}
+[9]  {1,25,28,3,37,5}   
+[10] {11,13,31,34,37,6} 
+
+### Association Rule Mining
+
+#### Generating Association Rules
+rules <- apriori(k, list(supp = 0.08, conf = 0.9))
+Result:
+Apriori
+
+Parameter specification:
+ confidence minval smax arem  aval originalSupport maxtime support minlen maxlen target  ext
+        0.9    0.1    1 none FALSE            TRUE       5    0.08      1     10  rules TRUE
+
+Algorithmic control:
+ filter tree heap memopt load sort verbose
+    0.1 TRUE TRUE  FALSE TRUE    2    TRUE
+
+Absolute minimum support count: 2 
+
+set item appearances ...[0 item(s)] done [0.00s].
+set transactions ...[50 item(s), 36 transaction(s)] done [0.00s].
+sorting and recoding items ... [44 item(s)] done [0.00s].
+creating transaction tree ... done [0.00s].
+checking subsets of size 1 2 3 done [0.00s].
+writing ... [3 rule(s)] done [0.00s].
+creating S4 object  ... done [0.00s].
+
+#### Sorting Rules
+rules_sort <- sort(rules, by = 'lift', decreasing = TRUE)
+Result:
+    lhs        rhs  support    confidence coverage   lift count
+[1] {27,47} => {2}  0.08333333 1          0.08333333 6    3    
+[2] {8}     => {47} 0.08333333 1          0.08333333 4    3    
+[3] {2,27}  => {47} 0.08333333 1          0.08333333 4    3  
+
+#### Inspecting Sorted Rules
+inspect(rules_sort)
+Result:
+    lhs        rhs  support    confidence coverage   lift count
+[1] {27,47} => {2}  0.08333333 1          0.08333333 6    3    
+[2] {8}     => {47} 0.08333333 1          0.08333333 4    3    
+[3] {2,27}  => {47} 0.08333333 1          0.08333333 4    3  
+
+#### Adjusting Parameters and Re-running
+rules <- apriori(k, list(supp = 0.03, conf = 0.9))
