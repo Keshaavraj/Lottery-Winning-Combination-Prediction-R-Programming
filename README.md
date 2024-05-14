@@ -1,4 +1,4 @@
-# Lottery Winning Combination Prediction
+# Lottery Winning Combination Prediction Using R Programming (Apriori)
 
 This repository contains code for predicting winning combinations for lottery tickets using association rule mining techniques implemented in R with the arules package.
 
