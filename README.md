@@ -11,7 +11,7 @@ To get started with this project, you'll need to have R installed on your system
 ```R
 install.packages("arules")
 
-## Usage ℹ️
+**### Usage ℹ️**
 Data Preparation: Ensure you have the Mahzooz.csv file containing your lottery ticket data. If not, replace it with your own dataset. Make sure the data is in CSV format and contains the transaction information of lottery tickets.
 
 Code Execution:
